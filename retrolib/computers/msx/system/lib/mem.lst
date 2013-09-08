@@ -1,0 +1,117 @@
+                              1 ;--------------------------------------------------------
+                              2 ; File Created by SDCC : free open source ANSI-C Compiler
+                              3 ; Version 3.2.0 #8008 (Jul 27 2012) (Linux)
+                              4 ; This file was generated Sun Sep  8 19:21:41 2013
+                              5 ;--------------------------------------------------------
+                              6 	.module mem
+                              7 	.optsdcc -mz80
+                              8 	
+                              9 ;--------------------------------------------------------
+                             10 ; Public variables in this module
+                             11 ;--------------------------------------------------------
+                             12 	.globl _memcpy
+                             13 	.globl _memset
+                             14 ;--------------------------------------------------------
+                             15 ; special function registers
+                             16 ;--------------------------------------------------------
+                             17 ;--------------------------------------------------------
+                             18 ; ram data
+                             19 ;--------------------------------------------------------
+                             20 	.area _DATA
+                             21 ;--------------------------------------------------------
+                             22 ; absolute external ram data
+                             23 ;--------------------------------------------------------
+                             24 	.area _DABS (ABS)
+                             25 ;--------------------------------------------------------
+                             26 ; global & static initialisations
+                             27 ;--------------------------------------------------------
+                             28 	.area _HOME
+                             29 	.area _GSINIT
+                             30 	.area _GSFINAL
+                             31 	.area _GSINIT
+                             32 ;--------------------------------------------------------
+                             33 ; Home
+                             34 ;--------------------------------------------------------
+                             35 	.area _HOME
+                             36 	.area _HOME
+                             37 ;--------------------------------------------------------
+                             38 ; code
+                             39 ;--------------------------------------------------------
+                             40 	.area _CODE
+                             41 ;src/mem.c:7: void memcpy(uint8_t *dest, uint8_t *src, uint16_t n) {
+                             42 ;	---------------------------------
+                             43 ; Function memcpy
+                             44 ; ---------------------------------
+   0000                      45 _memcpy_start::
+   0000                      46 _memcpy:
+   0000 DD E5                47 	push	ix
+   0002 DD 21 00 00          48 	ld	ix,#0
+   0006 DD 39                49 	add	ix,sp
+   0008 F5                   50 	push	af
+                             51 ;src/mem.c:8: while (n > 0) {
+   0009 DD 5E 04             52 	ld	e,4 (ix)
+   000C DD 56 05             53 	ld	d,5 (ix)
+   000F DD 7E 06             54 	ld	a,6 (ix)
+   0012 DD 77 FE             55 	ld	-2 (ix),a
+   0015 DD 7E 07             56 	ld	a,7 (ix)
+   0018 DD 77 FF             57 	ld	-1 (ix),a
+   001B DD 4E 08             58 	ld	c,8 (ix)
+   001E DD 46 09             59 	ld	b,9 (ix)
+   0021                      60 00101$:
+   0021 78                   61 	ld	a,b
+   0022 B1                   62 	or	a,c
+   0023 28 10                63 	jr	Z,00104$
+                             64 ;src/mem.c:9: *dest = *src;
+   0025 E1                   65 	pop	hl
+   0026 E5                   66 	push	hl
+   0027 7E                   67 	ld	a,(hl)
+   0028 12                   68 	ld	(de),a
+                             69 ;src/mem.c:10: dest++;
+   0029 13                   70 	inc	de
+                             71 ;src/mem.c:11: src++;
+   002A DD 34 FE             72 	inc	-2 (ix)
+   002D 20 03                73 	jr	NZ,00111$
+   002F DD 34 FF             74 	inc	-1 (ix)
+   0032                      75 00111$:
+                             76 ;src/mem.c:12: n--;
+   0032 0B                   77 	dec	bc
+   0033 18 EC                78 	jr	00101$
+   0035                      79 00104$:
+   0035 DD F9                80 	ld	sp,ix
+   0037 DD E1                81 	pop	ix
+   0039 C9                   82 	ret
+   003A                      83 _memcpy_end::
+                             84 ;src/mem.c:17: void memset(uint8_t *s, uint8_t c, uint16_t n) {
+                             85 ;	---------------------------------
+                             86 ; Function memset
+                             87 ; ---------------------------------
+   003A                      88 _memset_start::
+   003A                      89 _memset:
+                             90 ;src/mem.c:18: while (n > 0) {
+   003A C1                   91 	pop	bc
+   003B D1                   92 	pop	de
+   003C D5                   93 	push	de
+   003D C5                   94 	push	bc
+   003E 21 05 00             95 	ld	hl, #5
+   0041 39                   96 	add	hl, sp
+   0042 4E                   97 	ld	c, (hl)
+   0043 23                   98 	inc	hl
+   0044 46                   99 	ld	b, (hl)
+   0045                     100 00101$:
+   0045 78                  101 	ld	a,b
+   0046 B1                  102 	or	a,c
+   0047 C8                  103 	ret	Z
+                            104 ;src/mem.c:19: *s = c;
+   0048 21 04 00            105 	ld	hl, #4+0
+   004B 39                  106 	add	hl, sp
+   004C 7E                  107 	ld	a, (hl)
+   004D 12                  108 	ld	(de),a
+                            109 ;src/mem.c:20: s++;
+   004E 13                  110 	inc	de
+                            111 ;src/mem.c:21: n--;
+   004F 0B                  112 	dec	bc
+   0050 18 F3               113 	jr	00101$
+   0052 C9                  114 	ret
+   0053                     115 _memset_end::
+                            116 	.area _CODE
+                            117 	.area _CABS (ABS)
