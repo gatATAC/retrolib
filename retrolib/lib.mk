@@ -35,7 +35,7 @@ RETROLIBS =
 
 CPPFLAGS = -D_MSX_CROSS_COMPILER
 CFLAGS = -m$(CPU) 
-VARIANTFLAGS = --data-loc 0
+VARIANTFLAGS = 
 
 ## INCLUDES MK FILES ################
 
@@ -48,28 +48,14 @@ include $(COMPPATH)/targets/$(TARGET)/variants/$(VARIANT)/$(VARIANT).mk
 # rule to build the main program
 
 # rule to build the main program
-$(MAINNAME).com: $(MAINNAME).bin
-	cp $(MAINNAME).bin $(MAINNAME).com
-
-%.bin: %.ihx
-	$(HEX2BINTOOL) $<
-
-%.ihx: %.c $(MY_SRC:.c=.rel)
-	$(CC) $(CPPFLAGS) $(CFLAGS) $(VARIANTFLAGS) $(notdir $(MY_SRC:.c=.rel)) -o $(notdir $(MAIN:.c=.ihx)) $<
-
-%.rel: %.c
-	$(CC) $(CPPFLAGS) $(CFLAGS) -c $<
+$(MAINNAME).$(TARGET): $(MAINNAME).bin
+	cp $(MAINNAME).bin $(MAINNAME).$(TARGET)
 
 $(MAINNAME).bin: $(MAINNAME).ihx
 	$(HEX2BINTOOL) $<
 
 $(MAINNAME).ihx: $(MAIN) $(MY_SRC:.c=.rel)
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(VARIANTFLAGS)  $(RETROLIBS) $(INCLUDE) $(notdir $(MY_SRC:.c=.rel)) -o $(notdir $(MAIN:.c=.ihx)) $<
-
-all2: $(MAIN) $(MY_SRC:.c=.rel)
-	$(CC) $(CPPFLAGS) $(CFLAGS) $(VARIANTFLAGS) $(RETROLIBS) $(notdir $(MY_SRC:.c=.rel)) -o $(notdir $(MAIN:.c=.ihx)) $<
-	$(HEX2BINTOOL) $(MAINNAME).ihx
-	mv $(MAINNAME).bin ../dist/$(MAINNAME).com
 
 %.rel: %.c
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $<
