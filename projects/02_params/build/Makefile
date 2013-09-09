@@ -26,5 +26,5 @@ MY_SRC := $(SRCPATH)/func.c $(SRCPATH)/func2.c
 
 LIBPATH := ../../../retrolib
 
-include $(LIBPATH)/lib.mk
+include $(LIBPATH)/retrolib.mk
 

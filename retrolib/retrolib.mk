@@ -30,6 +30,7 @@ INCLUDE+= -I $(SDCC_INC)/include
 
 # lib paths
 RETROLIBS = 
+HEX2BINFLAGS = 
 
 ## FLAGS ##############################################################
 
@@ -48,11 +49,12 @@ include $(COMPPATH)/targets/$(TARGET)/variants/$(VARIANT)/$(VARIANT).mk
 # rule to build the main program
 
 # rule to build the main program
-$(MAINNAME).$(TARGET): $(MAINNAME).bin
-	cp $(MAINNAME).bin $(MAINNAME).$(TARGET)
+../dist/$(MAINNAME).$(TARGET): $(MAINNAME).bin
+	$(TARGETTOOL) $(TARGETARG1) $(MAINNAME).bin $(TARGETARG2) $(MAINNAME).$(TARGET)
+	mv $(MAINNAME).$(TARGET) ../dist
 
 $(MAINNAME).bin: $(MAINNAME).ihx
-	$(HEX2BINTOOL) $<
+	$(HEX2BINTOOL) $(HEX2BINFLAGS) $<
 
 $(MAINNAME).ihx: $(MAIN) $(MY_SRC:.c=.rel)
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(VARIANTFLAGS)  $(RETROLIBS) $(INCLUDE) $(notdir $(MY_SRC:.c=.rel)) -o $(notdir $(MAIN:.c=.ihx)) $<

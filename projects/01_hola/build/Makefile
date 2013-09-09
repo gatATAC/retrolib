@@ -26,5 +26,5 @@ MY_SRC :=
 
 LIBPATH := ../../../retrolib
 
-include $(LIBPATH)/lib.mk
+include $(LIBPATH)/retrolib.mk
 
