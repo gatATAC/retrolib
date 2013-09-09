@@ -31,5 +31,19 @@ También puedes, simplemente, lanzar el comando:
 
 > openmsx HelloSC2.rom
 
+NOTAS: 
+======
+
+La compilación de MSX ROM ha dado problemas con SDCC 3.2.0 debido a un bug que hace aparecer un warning de que una línea de ensamblador no ha podido ser parseada.  
+
+> Warning: z80instructionSize() failed to parse line node ld sp, (#0xFC4A)
+
+Esto se soluciona actualizando a la 3.3.0.  Se ha probado satisfactoriamente con la 2.9.7 y la 3.3.0, y ha fallado con la 3.2.0.
+
+Además, con la versión 3.3.0 es necesario usar un flag para que realice la ubicación de registros con el método antiguo, flag que no es necesario en la 2.9.7.
+
+>  --oldralloc
+
+
 (c) 2013 gatATAC en lo que no se reconozca expresamente la autoría a otra persona.
 Licencia GPL v2.
