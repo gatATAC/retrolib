@@ -15,3 +15,13 @@
 *.exe
 *.out
 *.app
+
+/projects/01_hola/dist/*.com
+/projects/02_params/dist/*.com
+/projects/03_holaROM/dist/*.rom
+/projects/01_hola/01_hola_linux/dist/
+/projects/01_hola/01_hola_linux/build/
+/projects/02_params/02_params_linux/build/
+/projects/02_params/02_params_linux/dist/
+/projects/03_holaROM/03_holaROM_linux/build/
+/projects/03_holaROM/03_holaROM_linux/dist/

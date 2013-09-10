@@ -1,5 +1,8 @@
+#ifdef _MSX_CROSS_COMPILER
 __sfr __at 0xA8 g_slotPort;
-
+#else
+int g_slotPort;
+#endif
 // MSX Hello World Sc2 ROM by aorante/303bcn
 
 // screen 2
@@ -26,11 +29,13 @@ void CHKRAM();
       
 void main(void) 
 {
+#ifdef _MSX_CROSS_COMPILER
   __asm
     di
     ld sp, (#0xFC4A)
     ei
   __endasm;
+#endif
   g_slotPort = (g_slotPort & 0xCF) | ((g_slotPort & 0x0C) << 2);
   
   mainWindow();
@@ -138,10 +143,12 @@ unsigned char font[]={
 void screen(char mode)
 {
   mode;
+#ifdef _MSX_CROSS_COMPILER
 __asm   
   ld a,4(ix)
   call 0x005F
 __endasm;
+#endif  
 }
 
 // by Andrear
@@ -150,6 +157,7 @@ void color(char fg, char bg, char bd)
   fg;
   bg;
   bd;
+#ifdef _MSX_CROSS_COMPILER
 __asm
   ld hl,#0xf3e9 
   ld a,4(ix)
@@ -162,6 +170,7 @@ __asm
   ld (hl),a  
   call 0x0062
 __endasm;
+#endif
 }
 
 // by Andrear
@@ -169,18 +178,25 @@ void vpoke(unsigned int address, unsigned char value)
 {
   address;
   value;
+#ifdef _MSX_CROSS_COMPILER
 __asm
   ld l,4(ix)
   ld h,5(ix)
   ld a,6(ix)
   call 0x004d
 __endasm;
+#endif
 }
 
 // by Andrear
+#ifdef _MSX_CROSS_COMPILER
+unsigned char vpeek(unsigned int address)  __naked
+#else
 unsigned char vpeek(unsigned int address)
+#endif
 {
   address;
+#ifdef _MSX_CROSS_COMPILER
 __asm
    ld l,4(ix)
    ld h,5(ix)
@@ -188,6 +204,7 @@ __asm
    ld h,#0x00
    ld l,a
 __endasm;
+#endif
 }
 
 // vpoke_block by Andrear
@@ -202,6 +219,7 @@ void VDP_FillVRAM (unsigned int begin, unsigned int size, unsigned char value)
   begin;
   size;
   value;
+#ifdef _MSX_CROSS_COMPILER
 __asm
   ld l, 4(ix)
   ld h, 5(ix)
@@ -210,6 +228,7 @@ __asm
   ld a, 8(ix)
   call 0x0056
 __endasm;
+#endif
 }
 
 void vprint(unsigned char posx, unsigned char posy, char* text, unsigned int size)
@@ -218,18 +237,29 @@ void vprint(unsigned char posx, unsigned char posy, char* text, unsigned int siz
   while (size-->0){ vpoke(address++,*(text++));}
 }
 
+#ifdef _MSX_CROSS_COMPILER
+unsigned char inkey()  __naked
+#else
 unsigned char inkey()
+#endif
 {
+#ifdef _MSX_CROSS_COMPILER
 __asm   
   call 0x009F
   ld h,#0x00
   ld l,a
 __endasm;
+#endif
 }
 
+#ifdef _MSX_CROSS_COMPILER
+unsigned char peek(unsigned int address) __naked
+#else
 unsigned char peek(unsigned int address)
+#endif
 {
   address;
+#ifdef _MSX_CROSS_COMPILER
 __asm
   ld l,4(ix)
   ld h,5(ix)
@@ -237,6 +267,7 @@ __asm
   ld h,#0x00
   ld l,a
 __endasm;
+#endif
 }
 
 // by Andrear
@@ -244,17 +275,21 @@ void poke(unsigned int address, unsigned char value)
 {
   address;
   value;
+#ifdef _MSX_CROSS_COMPILER
 __asm
   ld l,4(ix)
   ld h,5(ix)
   ld a,6(ix)
   ld (hl),a
 __endasm;
+#endif
 }
 
 void CHKRAM()
 {
+#ifdef _MSX_CROSS_COMPILER
 __asm   
    call 0x0000
 __endasm;
+#endif
 }
