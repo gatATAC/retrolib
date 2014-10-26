@@ -16,6 +16,19 @@
 *.out
 *.app
 
+# Extra files
+*.sym
+*.asm
+*.ihx
+*.lk
+*.lst
+*.map
+*.noi
+*.rel
+*.sym
+*.bin
+*.lnk
+
 /projects/01_hola/dist/*.com
 /projects/02_params/dist/*.com
 /projects/03_holaROM/dist/*.rom
