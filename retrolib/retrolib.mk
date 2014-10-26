@@ -64,5 +64,4 @@ $(MAINNAME).ihx: $(MAIN) $(MY_SRC:.c=.rel)
 
 # rule to tidy up the build directory
 clean:
-	-find . -name '*.asm' -o -name '*.ihx' -o -name '*.lk' -o -name '*.lst' -o -name '*.map' -o -name '*.noi' -o -name '*.rel' -o -name '*.sym' -o -name '*.com' -o -name '*.bin' | xargs rm
-	rm -rf ../dist/*
+	-find . -name '*.asm' -o -name '*.ihx' -o -name '*.lk' -o -name '*.lst' -o -name '*.map' -o -name '*.noi' -o -name '*.rel' -o -name '*.sym' -o -name '*.com' -o -name '*.bin' -o -name '*.lnk' | xargs rm
